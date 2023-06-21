@@ -1,0 +1,38 @@
+.packWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  background: lightgray;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.flipButton {
+  float:right;
+  background: lightgray;
+  padding: inherit;
+  margin: inherit;
+}
+
+.floatLeft {
+  float: left;
+  background: lightgray;
+  padding: inherit;
+  margin: inherit;
+}
+
+.center {
+  margin: auto;
+  display: block;
+}
+
+.centerText {
+  text-align: center;
+}
+
+.packHeader {
+  padding: 0;
+  margin: 0;
+  margin-top: 10;
+}
