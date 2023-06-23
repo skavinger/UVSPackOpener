@@ -111,5 +111,4 @@ function addToPulls(pulls, card) {
     }
     return pulls;
 }
-
 exports.helpers = helpers;

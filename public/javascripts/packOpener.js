@@ -1,3 +1,4 @@
+
 function flipCard(id){
 	document.getElementById(id).src = document.getElementById(id).alt;
 	document.getElementById(id + 'Name').classList.remove("hidden");
@@ -32,4 +33,3 @@ function copyPulls(pulls){
           alert('Error in copying text: ', err);
         });
 }
-
