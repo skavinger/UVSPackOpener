@@ -3,7 +3,7 @@ function flipCard(id){
 	document.getElementById(id + 'Name').classList.remove("hidden");
 }
 
-function flipPack(packNum, numC, numUC, numR){
+function flipPack(packNum, numC, numUC, numR, numCH){
 	for(var i = 0; i < numC; i++){
 		document.getElementById("Pack" + packNum + "CCard"+ i).src = document.getElementById("Pack" + packNum + "CCard"+ i).alt;
 		document.getElementById("Pack" + packNum + "CCard"+ i + 'Name').classList.remove("hidden");
@@ -16,4 +16,19 @@ function flipPack(packNum, numC, numUC, numR){
 		document.getElementById("Pack" + packNum + "RCard"+ i).src = document.getElementById("Pack" + packNum + "RCard"+ i).alt;
 		document.getElementById("Pack" + packNum + "RCard"+ i + 'Name').classList.remove("hidden");
 	}
+	for(var i = 0; i < numCH; i++){
+		document.getElementById("Pack" + packNum + "CHCard"+ i).src = document.getElementById("Pack" + packNum + "CHCard"+ i).alt;
+		document.getElementById("Pack" + packNum + "CHCard"+ i + 'Name').classList.remove("hidden");
+	}
+}
+
+function copyPulls(pulls){
+	let txt = document.getElementById("pulls").value;
+	navigator.clipboard.writeText(txt)
+        .then(() => {
+          alert('Text copied to clipboard');
+        })
+        .catch(err => {
+          alert('Error in copying text: ', err);
+        });
 }

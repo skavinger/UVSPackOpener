@@ -32,53 +32,84 @@ helpers.getSetsBoxes = function () {
 
 helpers.getPacks = function (set, packCount) {
     var output = {};
+    var pulls = "";
     output.body = "";
     output.css = '<link rel="stylesheet" type="text/css" href="/stylesheets/packOpener.css"/><script type = "text/JavaScript" src="/javascripts/packOpener.js"/></script>';
     var card;
     var numC = 6;
     var numUC = 3;
     var numR = 1;
+    var numCH = 0;
+    if(setData[set].sperateCharacters){
+        numCH = 1;
+    }
     for(var i = 0; i < packCount; i++){
-        output.body += '<div class=packHeader><h2 class=floatLeft>Pack ' + (i + 1) + '</h2><h2 class=flipButton onclick="flipPack(' + i + ',' + numC + ',' + numUC + ',' + numR + ')">Flip All</h2></div><br style="clear:both" /><div class="packWrapper">';
+        output.body += '<div class=packHeader><h2 class=floatLeft>Pack ' + (i + 1) + '</h2><h2 class=flipButton onclick="flipPack(' + i + ',' + numC + ',' + numUC + ',' + numR + ',' + numCH + ')">Flip All</h2></div><br style="clear:both" /><div class="packWrapper">';
         for(var j = 0; j < numC; j++){
             card = pickCard(setData[set].Commons);
-            output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + cardList[card] + '" id="Pack' + i + 'CCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'CCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'CCard' + j + 'Name" class="hidden centerText">' + card + ' (C)</p></div>';
+            pulls += "1 " + card.name + "\n";
+            output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'CCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'CCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'CCard' + j + 'Name" class="hidden centerText">' + card.name + ' (C)</p></div>';
         }
         for(var j = 0; j < numUC; j++){
             if(j === 2 && setData[set].containsXRs && getRandomInt(setData[set].XRRate) === 0){
                 card = pickCard(setData[set].Commons.concat(setData[set].Uncommons, setData[set].Rares, setData[set].UltraRares, setData[set].SecretRares));
-                output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + cardList[card] + '" id="Pack' + i + 'UCCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'UCCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'UCCard' + j + 'Name" class="hidden centerText">' + card + ' (XR)</p></div>';
+                output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'UCCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'UCCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'UCCard' + j + 'Name" class="hidden centerText">' + card.name + ' (XR)</p></div>';
             }
             else{
                 card = pickCard(setData[set].Uncommons);
-                output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + cardList[card] + '" id="Pack' + i + 'UCCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'UCCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'UCCard' + j + 'Name" class="hidden centerText">' + card + ' (UC)</p></div>';
+                output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'UCCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'UCCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'UCCard' + j + 'Name" class="hidden centerText">' + card.name + ' (UC)</p></div>';
             }
+            pulls += "1 " + card.name + "\n";
         }
         for(var j = 0; j < numR; j++){
             if(j === 0 && getRandomInt(4) === 0){
                 card = pickCard(setData[set].Ultrarares);
-                output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + cardList[card] + '" id="Pack' + i + 'RCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'RCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'RCard' + j + 'Name" class="hidden centerText">' + card + ' (UR)</p></div>';
+                output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'RCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'RCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'RCard' + j + 'Name" class="hidden centerText">' + card.name + ' (UR)</p></div>';
             }
             else if(j === 0 && setData[set].containsSRs && getRandomInt(setData[set].SRRate) === 0){
                 card = pickCard(setData[set].Secretrares);
-                output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + cardList[card] + '" id="Pack' + i + 'RCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'RCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'RCard' + j + 'Name" class="hidden centerText">' + card + ' (SR)</p></div>';
+                output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'RCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'RCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'RCard' + j + 'Name" class="hidden centerText">' + card.name + ' (SR)</p></div>';
             }
             else{
                 card = pickCard(setData[set].Rares);
-                output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + cardList[card] + '" id="Pack' + i + 'RCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'RCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'RCard' + j + 'Name" class="hidden centerText">' + card + ' (R)</p></div>';
+                output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'RCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'RCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'RCard' + j + 'Name" class="hidden centerText">' + card.name + ' (R)</p></div>';
             }
+            pulls += "1 " + card.name + "\n";
+        }
+        if(setData[set].sperateCharacters){
+           for(var j = 0; j < numCH; j++){
+                card = pickCard(setData[set].Characters);
+                output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'CHCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'CHCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'CHCard' + j + 'Name" class="hidden centerText">' + card.name + ' (CH)</p></div>';
+            }
+            pulls += "1 " + card.name + "\n";
         }
         output.body += '</div>';
     }
+    output.body += '<button type="button" onclick="copyPulls()">Copy Pulls</button>';
+    output.body += '<textarea id="pulls">' + pulls + '</textarea>';
     return output;
 }
 
 var pickCard = function(cardSubList){
-    return cardSubList[getRandomInt(cardSubList.length)];
+    var card = cardSubList[getRandomInt(cardSubList.length - 1)];
+    return {
+        "name": card,
+        "url": cardList[card.toLowerCase()]
+    }
 }
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max);
+}
+
+function addToPulls(pulls, card) {
+    if(pulls[card] === undefined){
+        pulls[card] = 1;
+    }
+    else{
+        pulls[card] = pulls[card] + 1;
+    }
+    return pulls;
 }
 
 exports.helpers = helpers;
