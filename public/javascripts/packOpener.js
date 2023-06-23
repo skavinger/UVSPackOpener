@@ -32,3 +32,4 @@ function copyPulls(pulls){
           alert('Error in copying text: ', err);
         });
 }
+

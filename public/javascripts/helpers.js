@@ -7,7 +7,7 @@ var helpers = function() {}
 
 helpers.getHeader = function () {
     var headerData = {};
-    headerData.css = '<link rel="stylesheet" type="text/css" href="/stylesheets/header.css"/>';
+    headerData.css = '<link rel="stylesheet" type="text/css" href="/stylesheets/header.css"/><script type = "text/JavaScript" src="/javascripts/landingPage.js"/></script>';
     headerData.body = '<div class="header"><img src="/images/Logos/universus.png" height=62 width=93 class="logo"/><h1 class="title">UVS Pack Opner</h1></div>';
     return headerData;
 }
@@ -24,7 +24,7 @@ helpers.getSetsBoxes = function () {
     output.body = '<div class="setWrapper">';
     output.css = '<link rel="stylesheet" type="text/css" href="/stylesheets/setBoxes.css"/>';
     for(var set in setList.SetList){
-        output.body += '<div class="set"><a href="/packOpener/' + setList.SetList[set] + '"><img src="/images/Packs/' + setList.SetList[set] + '.png" height=75% width=75% class="boxArt"/><p>' + setList.SetList[set] + '</p></a></div>\n';
+        output.body += '<div class="set"><a href="#" onclick="genPage(\'' + setList.SetList[set] + '\')"><img src="/images/Packs/' + setList.SetList[set] + '.png" height=75% width=75% class="boxArt"/><p>' + setList.SetList[set] + '</p></a><input type="number" name="' + setList.SetList[set] + 'Count" id="' + setList.SetList[set] + 'Count" min="0" value="1"></div>\n';
     }
     output.body += '</div>';
     return output;
@@ -86,7 +86,7 @@ helpers.getPacks = function (set, packCount) {
         output.body += '</div>';
     }
     output.body += '<button type="button" onclick="copyPulls()">Copy Pulls</button>';
-    output.body += '<textarea id="pulls">' + pulls + '</textarea>';
+    output.body += '<textarea class="none">' + pulls + '</textarea>';
     return output;
 }
 

@@ -20,10 +20,10 @@ app.get('/', function(req, res) {
     res.send(page);
 }.bind(this));
 
-app.get('/packOpener/:setname', function(req, res) {
+app.get('/packOpener/:setname/:packCount', function(req, res) {
     var header = helpers.getHeader();
     var footer = helpers.getFooter();
-    var setList = helpers.getPacks(req.params.setname, 24);
+    var setList = helpers.getPacks(req.params.setname, req.params.packCount);
     var page = "";
     page += header.css; 
     page += setList.css;
@@ -33,6 +33,7 @@ app.get('/packOpener/:setname', function(req, res) {
     page += footer.body
     res.send(page);
 }.bind(this));
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
