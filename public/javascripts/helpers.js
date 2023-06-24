@@ -58,7 +58,7 @@ helpers.getPacks = function (set, packCount) {
         }
         for(var j = 0; j < numUC; j++){
             if(j === 2 && setData[set].containsXRs && getRandomInt(setData[set].XRRate) === 0){
-                card = pickCard(setData[set].Commons.concat(setData[set].Uncommons, setData[set].Rares, setData[set].UltraRares, setData[set].SecretRares));
+                card = pickCard(setData[set].Commons.concat(setData[set].Uncommons, setData[set].Rares, setData[set].Ultrarares, setData[set].Secretrares));
                 output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'UCCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'UCCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'UCCard' + j + 'Name" class="hidden centerText">' + card.name + ' (XR)</p></div>';
             }
             else{
