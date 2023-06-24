@@ -43,26 +43,29 @@ helpers.getPacks = function (set, packCount) {
     if(setData[set].sperateCharacters){
         numCH = 1;
     }
+    var currentPulls = [];
     output.body += '<button type="button" onclick="copyPulls()">Copy Pulls</button>';
     for(var i = 0; i < packCount; i++){
+        currentPulls = [];
         output.body += '<div class=packHeader><h2 class=floatLeft>Pack ' + (i + 1) + '</h2><h2 class=flipButton onclick="flipPack(' + i + ',' + numC + ',' + numUC + ',' + numR + ',' + numCH + ')">Flip All</h2></div><br style="clear:both" /><div class="packWrapper">';
         for(var j = 0; j < numC; j++){
-            card = pickCard(setData[set].Commons);
+            card = pickCard(setData[set].Commons, currentPulls);
             if(pulls[card.name] !== undefined){
                 pulls[card.name]++;
             }
             else{
                 pulls[card.name] = 1;
             }
+            currentPulls.push(card.name);
             output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'CCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'CCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'CCard' + j + 'Name" class="hidden centerText">' + card.name + ' (C)</p></div>';
         }
         for(var j = 0; j < numUC; j++){
             if(j === 2 && setData[set].containsXRs && getRandomInt(setData[set].XRRate) === 0){
-                card = pickCard(setData[set].Commons.concat(setData[set].Uncommons, setData[set].Rares, setData[set].Ultrarares, setData[set].Secretrares));
+                card = pickCard(setData[set].Commons.concat(setData[set].Uncommons, setData[set].Rares, setData[set].Ultrarares, setData[set].Secretrares), []);
                 output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'UCCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'UCCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'UCCard' + j + 'Name" class="hidden centerText">' + card.name + ' (XR)</p></div>';
             }
             else{
-                card = pickCard(setData[set].Uncommons);
+                card = pickCard(setData[set].Uncommons, currentPulls);
                 output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'UCCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'UCCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'UCCard' + j + 'Name" class="hidden centerText">' + card.name + ' (UC)</p></div>';
             }
             if(pulls[card.name] !== undefined){
@@ -71,18 +74,19 @@ helpers.getPacks = function (set, packCount) {
             else{
                 pulls[card.name] = 1;
             }
+            currentPulls.push(card.name);
         }
         for(var j = 0; j < numR; j++){
             if(j === 0 && getRandomInt(4) === 0){
-                card = pickCard(setData[set].Ultrarares);
+                card = pickCard(setData[set].Ultrarares, currentPulls);
                 output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'RCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'RCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'RCard' + j + 'Name" class="hidden centerText">' + card.name + ' (UR)</p></div>';
             }
             else if(j === 0 && setData[set].containsSRs && getRandomInt(setData[set].SRRate) === 0){
-                card = pickCard(setData[set].Secretrares);
+                card = pickCard(setData[set].Secretrares, currentPulls);
                 output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'RCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'RCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'RCard' + j + 'Name" class="hidden centerText">' + card.name + ' (SR)</p></div>';
             }
             else{
-                card = pickCard(setData[set].Rares);
+                card = pickCard(setData[set].Rares, currentPulls);
                 output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'RCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'RCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'RCard' + j + 'Name" class="hidden centerText">' + card.name + ' (R)</p></div>';
             }
             if(pulls[card.name] !== undefined){
@@ -91,10 +95,11 @@ helpers.getPacks = function (set, packCount) {
             else{
                 pulls[card.name] = 1;
             }
+            currentPulls.push(card.name);
         }
         if(setData[set].sperateCharacters){
            for(var j = 0; j < numCH; j++){
-                card = pickCard(setData[set].Characters);
+                card = pickCard(setData[set].Characters, currentPulls);
                 output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'CHCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'CHCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'CHCard' + j + 'Name" class="hidden centerText">' + card.name + ' (CH)</p></div>';
             }
             if(pulls[card.name] !== undefined){
@@ -103,6 +108,7 @@ helpers.getPacks = function (set, packCount) {
             else{
                 pulls[card.name] = 1;
             }
+            currentPulls.push(card.name);
         }
         output.body += '</div>';
     }
@@ -114,8 +120,14 @@ helpers.getPacks = function (set, packCount) {
     return output;
 }
 
-var pickCard = function(cardSubList){
+var pickCard = function(cardSubList, currentPulls){
     var card = cardSubList[getRandomInt(cardSubList.length - 1)];
+    for(var i = 0; i < currentPulls.length; i++){
+        if(currentPulls[i] === card){
+            card = pickCard(cardSubList, currentPulls).name;
+            break;
+        }
+    }
     return {
         "name": card,
         "url": cardList[card.toLowerCase()]
@@ -126,13 +138,4 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
-function addToPulls(pulls, card) {
-    if(pulls[card] === undefined){
-        pulls[card] = 1;
-    }
-    else{
-        pulls[card] = pulls[card] + 1;
-    }
-    return pulls;
-}
 exports.helpers = helpers;
