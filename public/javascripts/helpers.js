@@ -8,7 +8,7 @@ var helpers = function() {}
 helpers.getHeader = function () {
     var headerData = {};
     headerData.css = '<link rel="stylesheet" type="text/css" href="/stylesheets/header.css"/><script type = "text/JavaScript" src="/javascripts/landingPage.js"/></script>';
-    headerData.body = '<div class="header"><img src="/images/Logos/universus.png" height=62 width=93 class="logo"/><h1 class="title">UVS Pack Opner</h1></div>';
+    headerData.body = '<div class="header"><img src="/images/Logos/universus.png" height=62 width=93 class="logo"/><h1 class="title">UVS Pack Opener</h1></div>';
     return headerData;
 }
 

@@ -1,3 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@500&display=swap');
+/* 
+  style.css isn't being loaded, and I don't know enough about express to fix it.
+  so... Janky hacks ahoy. Spin this back into style.css if you get it working. ~Chris
+*/
+body {
+  --font: 'Encode Sans SC', sans-serif;
+  font: 14px var(--font);
+  background-color:darkgray;
+}
+
+
 /* Style the header with a grey background and some padding */
 .header {
   overflow: hidden;
