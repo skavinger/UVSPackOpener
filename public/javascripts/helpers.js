@@ -32,7 +32,7 @@ helpers.getSetsBoxes = function () {
 
 helpers.getPacks = function (set, packCount) {
     var output = {};
-    var pulls = "";
+    var pulls = [];
     output.body = "";
     output.css = '<link rel="stylesheet" type="text/css" href="/stylesheets/packOpener.css"/><script type = "text/JavaScript" src="/javascripts/packOpener.js"/></script>';
     var card;
@@ -43,11 +43,17 @@ helpers.getPacks = function (set, packCount) {
     if(setData[set].sperateCharacters){
         numCH = 1;
     }
+    output.body += '<button type="button" onclick="copyPulls()">Copy Pulls</button>';
     for(var i = 0; i < packCount; i++){
         output.body += '<div class=packHeader><h2 class=floatLeft>Pack ' + (i + 1) + '</h2><h2 class=flipButton onclick="flipPack(' + i + ',' + numC + ',' + numUC + ',' + numR + ',' + numCH + ')">Flip All</h2></div><br style="clear:both" /><div class="packWrapper">';
         for(var j = 0; j < numC; j++){
             card = pickCard(setData[set].Commons);
-            pulls += "1 " + card.name + "\n";
+            if(pulls[card.name] !== undefined){
+                pulls[card.name]++;
+            }
+            else{
+                pulls[card.name] = 1;
+            }
             output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'CCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'CCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'CCard' + j + 'Name" class="hidden centerText">' + card.name + ' (C)</p></div>';
         }
         for(var j = 0; j < numUC; j++){
@@ -59,7 +65,12 @@ helpers.getPacks = function (set, packCount) {
                 card = pickCard(setData[set].Uncommons);
                 output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'UCCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'UCCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'UCCard' + j + 'Name" class="hidden centerText">' + card.name + ' (UC)</p></div>';
             }
-            pulls += "1 " + card.name + "\n";
+            if(pulls[card.name] !== undefined){
+                pulls[card.name]++;
+            }
+            else{
+                pulls[card.name] = 1;
+            }
         }
         for(var j = 0; j < numR; j++){
             if(j === 0 && getRandomInt(4) === 0){
@@ -74,19 +85,32 @@ helpers.getPacks = function (set, packCount) {
                 card = pickCard(setData[set].Rares);
                 output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'RCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'RCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'RCard' + j + 'Name" class="hidden centerText">' + card.name + ' (R)</p></div>';
             }
-            pulls += "1 " + card.name + "\n";
+            if(pulls[card.name] !== undefined){
+                pulls[card.name]++;
+            }
+            else{
+                pulls[card.name] = 1;
+            }
         }
         if(setData[set].sperateCharacters){
            for(var j = 0; j < numCH; j++){
                 card = pickCard(setData[set].Characters);
                 output.body += '<div class="card"><img src="/images/CardBacks/UVS_Back.webp" alt="' + card.url + '" id="Pack' + i + 'CHCard' + j + '" class=center onclick="flipCard(\'Pack' + i + 'CHCard' + j + '\')" height=auto width=75%><p id="Pack' + i + 'CHCard' + j + 'Name" class="hidden centerText">' + card.name + ' (CH)</p></div>';
             }
-            pulls += "1 " + card.name + "\n";
+            if(pulls[card.name] !== undefined){
+                pulls[card.name]++;
+            }
+            else{
+                pulls[card.name] = 1;
+            }
         }
         output.body += '</div>';
     }
-    output.body += '<button type="button" onclick="copyPulls()">Copy Pulls</button>';
-    output.body += '<textarea class="none">' + pulls + '</textarea>';
+    var pullsout = "";
+    for(var card in pulls){
+        pullsout += pulls[card] + " " + card + "\n";
+    }
+    output.body += '<textarea id="pulls" class="none">' + pullsout + '</textarea>';
     return output;
 }
 
