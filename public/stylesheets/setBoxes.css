@@ -1,9 +1,37 @@
 .setWrapper {
+  background-color:gray;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  background: lightgray;
 }
 .boxArt {
   /* This will, with the tradeoff of reducing the brightness slightly, comlpetely remove the white background from the images.*/
   mix-blend-mode: multiply;
+  height:30em;
+}
+.set {
+  padding-bottom: 0.3em;
+  border:solid 1px gray;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  margin:2.5px;
+  border-radius: 5px;
+  background-color:lightgray;
+}
+input {
+  width:80%
+}
+a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width:100%
+}
+a:link {
+  text-decoration: none;
+  color:black;
+}
+a:visited {
+  text-decoration: none;
+  color:black;
 }
