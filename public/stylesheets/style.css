@@ -1,8 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Carrois+Gothic+SC&family=Cormorant:wght@300&family=IBM+Plex+Sans+Condensed:wght@300&display=swap');
+html { 
+  --font: 'Carrois Gothic SC', sans-serif;
+}
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px var(--font);
 }
 
 a {
   color: #00B7FF;
 }
+

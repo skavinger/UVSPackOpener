@@ -3,3 +3,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   background: lightgray;
 }
+.boxArt {
+  /* This will, with the tradeoff of reducing the brightness slightly, comlpetely remove the white background from the images.*/
+  mix-blend-mode: multiply;
+}
