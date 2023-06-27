@@ -44,7 +44,7 @@ helpers.getPacks = function (set, packCount) {
         numCH = 1;
     }
     var currentPulls = [];
-    output.body += '<button type="button" onclick="copyPulls()">Copy Pulls</button>';
+    //output.body += '<button type="button" onclick="copyPulls()">Copy Pulls</button>';
     for(var i = 0; i < packCount; i++){
         currentPulls = [];
         output.body += '<div class=packHeader><h2 class=floatLeft>Pack ' + (i + 1) + '</h2><h2 class=flipButton onclick="flipPack(' + i + ',' + numC + ',' + numUC + ',' + numR + ',' + numCH + ')">Flip All</h2></div><br style="clear:both" /><div class="packWrapper">';
@@ -116,7 +116,7 @@ helpers.getPacks = function (set, packCount) {
     for(var card in pulls){
         pullsout += pulls[card] + " " + card + "\n";
     }
-    output.body += '<textarea id="pulls" class="none">' + pullsout + '</textarea>';
+    output.body += '<textarea id="pulls" class="">' + pullsout + '</textarea>';
     return output;
 }
 
